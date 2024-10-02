@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МедВед форма</title>
+    <style>
+        body {
+            background-color: #bfddc0;
+        }
+        .h1 {
+            text-align: center
+        }
+        form {
+            max-width: 450px;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #afe9cc;
+            background-color: #caf3cb;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"], input[type="date"], input[type="tel"] {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #b9e490;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+        footer {
+            background-color: #f0f0f0;
+            padding: 10px;
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="h1">Введите ваши данные</h1>
+    <form id="myForm">
+        <fieldset>
+            <legend>Ваши данные</legend>
+            <label for="fio">ФИО:</label>
+            <input type="text" id="fio" name="fio" pattern="[а-яА-Я\s]+" required><br><br>
+            <label for="dob">Дата рождения:</label>
+            <input type="date" id="dob" name="dob" max="2006-12-31" min="1904-01-01"required><br><br>
+            <label for="phone">Номер телефона:</label>
+            <input type="tel" id="phone" name="phone" pattern="\d{11}" required><br><br>
+            <label for="admission">Дата приема со временем:</label>
+            <input type="datetime-local" id="admission" name="admission" required><br><br>
+        </fieldset>
+        <div style="text-align: center;">
+            <input type="submit" value="Отправить">
+        </div>
+    </form>
+    <footer>
+        &copy; 2024 ООО "МедВед"
+    </footer>
+    <script>
+        var now = new Date();
+        var tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+        tomorrow.setHours(8, 0, 0);
+        document.getElementById("admission").min = tomorrow.toISOString().slice(0, 16);
+        
+        document.getElementById("myForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var fio = document.getElementById("fio").value;
+            var dob = document.getElementById("dob").value;
+            var phone = document.getElementById("phone").value;
+            var admission = document.getElementById("admission").value;
+            if (fio && dob && phone && admission) {
+                var popup = window.open("", "popup", "width=400,height=200");
+                popup.document.write("<h2>Ваши данные:</h2>");
+                popup.document.write("<p>ФИО: " + fio + "</p>");
+                popup.document.write("<p>Дата рождения: " + dob + "</p>");
+                popup.document.write("<p>Номер телефона: " + phone + "</p>");
+                popup.document.write("<p>Дата приема со временем: " + admission + "</p>");
+            } else {
+                alert("Пожалуйста, заполните все поля!");
+            }
+        });
+    </script>
+</body>
+</html>
